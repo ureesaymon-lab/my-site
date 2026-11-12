@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAEYUlEQVR4nO3dMW4USRiG4QLtFVYkiBSRc6yNfBBHHIsccQSLS2xgyTuBWWbm66r6f/fzhEhTjKtfl01PVfPu48dPA+71fvcboDcBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARARH5a/cbGB8+/L37LfT29PRr49++LSDdHOVlJreUtCEg6UzyPLGLM1r9O5B6Zls8w0sDUs8aK+d5XUDqWWnZbC8KSD3rrZnzFQGpZ5cFM+9GIpHpAVl+9po9/1YgIgIiMjcgP78qmHoVrEBE9n8af+nh4WH3W2jg8fFx91v4z7upTyi7afFUz01uymjeJ6wlApLOfa5vaF5AfgdqrMI33v6AKsxCX9tnb3NA27/+N2DvHO5fgWhNQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERGRzQKWeldTU3jm0AhHZH5BFKLF99vYHNArMQlMV5q1EQKPGXPRSZMZKPCPxhedNXeOOdN74QzaZzUM2KUpARAREREBEBEREQEQERERARAREREBEBEREQEQERKTWf7r7qs+fv7z65z9//mgx/hjj+z+vD/X12+t/dSOlt3P87tJeSi7z7PHH79O5tCCj0+0HuubSXrr1Ms8ef1yXzqWpGZ1rP9CtV/fWl8wef9xez30vqaBcQHdc3ZteOHv8EaTQsaFaAd19da98+ezxRxxBu4ZqBUQ7hQIKl4c/DjJ7/HHQ+tFrESoUEB0JiIiAiAiIiICIFArokA8v/2eQ2eOPgz6O6PUJa6GA6KhWQOEi8ceXzx5/xOtHr+VnVAtoBNf4yhfOHn8EEbSrZxQMaNx1jW96yezxx10pdKxnlN0P9MyGsqOcbkPZJVtac6cOiNy5diTSiICICIiIgIgIiIiAiDjafIr7QPOUvg/kTvRRTncj0dHmY53rRqKjzY2UC8jR5l5qBeRoc7uGagVEO4UCcrT5wEGWKRQQHQmIiICICIiIgIgUCsjR5gMHWaZQQHRUKyBHm3stP6NaQMPR5m7KBTQcbW6l6H6gZzaUHeV0G8ou2dKaO3VA5M61I5FGBEREQEQERERARARExNHmU9wHmqf0fSB3oo9yuhuJjjYf61w3Eh1tbqRcQI4291IrIEeb2zVUKyDaKRSQo80HDrJMoYDoSEBEBEREQEQERKRQQI42HzjIMoUCoqNaATna3Gv5GdUCGo42d1MuoOFocytF9wM9s6HsKKfbUHbJltbcqQMid64diTQyN6B54XO9qVfBCkREQESmB+Sn2F6z598K9JYt+O5dEZBF6A1btAJpaL01c77uR5iGVlo220t/B9LQGivnefUv0Rqa6unp1+IZ3vCvsPVf5ElsmdVtD5h6+Wp94Bra+924/wllVqPW3EgkIiAiAiIiICICIiIgIgIiIiAiAiIiICICIiIgIgIiIiAiAiIiICICIvIvOFAHR01XQ8AAAAAASUVORK5CYII="><link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAEYUlEQVR4nO3dMW4USRiG4QLtFVYkiBSRc6yNfBBHHIsccQSLS2xgyTuBWWbm66r6f/fzhEhTjKtfl01PVfPu48dPA+71fvcboDcBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARARH5a/cbGB8+/L37LfT29PRr49++LSDdHOVlJreUtCEg6UzyPLGLM1r9O5B6Zls8w0sDUs8aK+d5XUDqWWnZbC8KSD3rrZnzFQGpZ5cFM+9GIpHpAVl+9po9/1YgIgIiMjcgP78qmHoVrEBE9n8af+nh4WH3W2jg8fFx91v4z7upTyi7afFUz01uymjeJ6wlApLOfa5vaF5AfgdqrMI33v6AKsxCX9tnb3NA27/+N2DvHO5fgWhNQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERGRzQKWeldTU3jm0AhHZH5BFKLF99vYHNArMQlMV5q1EQKPGXPRSZMZKPCPxhedNXeOOdN74QzaZzUM2KUpARAREREBEBEREQEQERERARAREREBEBEREQEQERKTWf7r7qs+fv7z65z9//mgx/hjj+z+vD/X12+t/dSOlt3P87tJeSi7z7PHH79O5tCCj0+0HuubSXrr1Ms8ef1yXzqWpGZ1rP9CtV/fWl8wef9xez30vqaBcQHdc3ZteOHv8EaTQsaFaAd19da98+ezxRxxBu4ZqBUQ7hQIKl4c/DjJ7/HHQ+tFrESoUEB0JiIiAiAiIiICIFArokA8v/2eQ2eOPgz6O6PUJa6GA6KhWQOEi8ceXzx5/xOtHr+VnVAtoBNf4yhfOHn8EEbSrZxQMaNx1jW96yezxx10pdKxnlN0P9MyGsqOcbkPZJVtac6cOiNy5diTSiICICIiIgIgIiIiAiDjafIr7QPOUvg/kTvRRTncj0dHmY53rRqKjzY2UC8jR5l5qBeRoc7uGagVEO4UCcrT5wEGWKRQQHQmIiICICIiIgIgUCsjR5gMHWaZQQHRUKyBHm3stP6NaQMPR5m7KBTQcbW6l6H6gZzaUHeV0G8ou2dKaO3VA5M61I5FGBEREQEQERERARARExNHmU9wHmqf0fSB3oo9yuhuJjjYf61w3Eh1tbqRcQI4291IrIEeb2zVUKyDaKRSQo80HDrJMoYDoSEBEBEREQEQERKRQQI42HzjIMoUCoqNaATna3Gv5GdUCGo42d1MuoOFocytF9wM9s6HsKKfbUHbJltbcqQMid64diTQyN6B54XO9qVfBCkREQESmB+Sn2F6z598K9JYt+O5dEZBF6A1btAJpaL01c77uR5iGVlo220t/B9LQGivnefUv0Rqa6unp1+IZ3vCvsPVf5ElsmdVtD5h6+Wp94Bra+924/wllVqPW3EgkIiAiAiIiICICIiIgIgIiIiAiAiIiICICIiIgIgIiIiAiAiIiICICIvIvOFAHR01XQ8AAAAAASUVORK5CYII=">
+<title>Calculator</title>
+<style>
+:root{--bg:#fff;--fg:#050505;--sub:#65676b;--bub:#e4e6eb;--card:#f0f2f5;--line:#dadde1;--blue:#0084ff;color-scheme:light}
+:root[data-theme=dark]{--bg:#18191a;--fg:#e4e6eb;--sub:#b0b3b8;--bub:#3a3b3c;--card:#242526;--line:#3e4042;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}
+body{font-family:system-ui,-apple-system,"Noto Sans Bengali",Roboto,sans-serif;background:var(--bg);color:var(--fg);overflow:hidden}
+.screen{display:none;position:fixed;inset:0;flex-direction:column;background:var(--bg);padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+.screen.on{display:flex}
+button{font:inherit;color:inherit;cursor:pointer}
+/* calculator */
+#calc{background:#000;color:#fff}
+#disp{flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding:24px;font-size:72px;font-weight:300;word-break:break-all;text-align:right}
+#hint{color:#ff9f0a;font-size:13px;text-align:right;padding:0 24px 8px;min-height:22px}
+#keys{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px 14px 22px}
+#keys button{aspect-ratio:1;border:0;border-radius:50%;font-size:32px;background:#333;color:#fff}
+#keys button:active{filter:brightness(1.4)}#keys .op{background:#ff9f0a}#keys .fn{background:#a5a5a5;color:#000}
+#keys .z{grid-column:span 2;aspect-ratio:auto;border-radius:44px;text-align:left;padding-left:32px}
+/* common */
+.top{display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:56px}
+.top h1{margin:0;font-size:26px;font-weight:800;flex:1}
+.ib{background:none;border:0;font-size:22px;padding:8px;color:var(--blue)}
+.av{border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;position:relative}
+.dot{position:absolute;right:0;bottom:0;width:30%;height:30%;border-radius:50%;background:#31a24c;border:2px solid var(--bg)}
+.pane{display:none;flex:1;overflow-y:auto}.pane.on{display:block}
+input.in,select{width:100%;border:0;background:var(--card);color:var(--fg);border-radius:22px;padding:12px 16px;font-size:16px;outline:0}
+select{width:auto;padding:8px 12px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 16px}.row .g{flex:1;min-width:0}
+.row b{display:block}.row small{color:var(--sub);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{border:0;border-radius:20px;background:var(--blue);color:#fff;padding:9px 16px;font-weight:600}.btn.g2{background:var(--card);color:var(--fg)}.btn.big{width:100%;padding:14px;font-size:16px;border-radius:26px}
+h3{margin:14px 16px 4px;font-size:14px;color:var(--sub);text-transform:uppercase}
+.empty{text-align:center;color:var(--sub);padding:80px 30px;line-height:1.6}
+nav{display:flex;border-top:1px solid var(--line)}nav button{flex:1;background:none;border:0;padding:8px 0 10px;font-size:11px;color:var(--sub)}nav button i{display:block;font-style:normal;font-size:24px}nav button.on{color:var(--blue)}
+/* login */
+#login{padding:30px 28px;justify-content:center;gap:12px;overflow-y:auto}
+.logo{width:76px;height:76px;margin:0 auto;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#006aff,#a033ff);display:flex;align-items:center;justify-content:center;font-size:38px}
+/* chat */
+#cmsgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.m{max-width:76%;padding:8px 13px;border-radius:19px;background:var(--bub);align-self:flex-start;word-break:break-word;white-space:pre-wrap;line-height:1.35}
+.m.me{background:linear-gradient(180deg,#00a0ff,#0070ff);color:#fff;align-self:flex-end}.m.del{background:none;border:1px solid var(--line);color:var(--sub);font-style:italic}
+.ts{align-self:center;font-size:12px;color:var(--sub);margin:10px 0 4px}.st{align-self:flex-end;font-size:11px;color:var(--sub);margin:2px 6px 4px}
+#cf{display:flex;gap:8px;padding:8px 10px;align-items:center;border-top:1px solid var(--line)}
+#cf button{background:none;border:0;color:var(--blue);font-size:26px}#cf input{flex:1}
+#toast{position:fixed;left:16px;right:16px;bottom:90px;background:#333;color:#fff;padding:12px 14px;border-radius:12px;display:none;z-index:9;font-size:14px}
+</style></head><body>
+
+<div id="calc" class="screen on"><div id="disp">0</div><div id="hint"></div><div id="keys"></div></div>
+
+<div id="login" class="screen">
+ <div class="logo">💬</div><h2 style="text-align:center;margin:4px 0 14px">Talkly</h2>
+ <div id="l1"><input class="in" id="ph" type="tel" value="+880" placeholder="ফোন নম্বর (+8801...)"><br><br><button class="btn big" id="sendOtp">কোড পাঠান</button></div>
+ <div id="l2" style="display:none"><input class="in" id="otp" inputmode="numeric" placeholder="৬ সংখ্যার কোড"><br><br><button class="btn big" id="verify">লগ ইন</button></div>
+ <div style="text-align:center;color:var(--sub);margin:6px">অথবা</div>
+ <button class="btn big g2" id="gbtn">Google দিয়ে চালিয়ে যান</button>
+ <div id="rc"></div>
+</div>
+
+<div id="app" class="screen">
+ <div class="pane on" id="p-chats"><div class="top"><h1>Chats</h1><button class="ib" data-lock>🔒</button></div><div id="chatlist"></div></div>
+ <div class="pane" id="p-people"><div class="top"><h1>People</h1></div>
+  <form id="sf" style="display:flex;gap:8px;padding:0 16px"><input class="in" id="sq" maxlength="20" placeholder="UID বা ইউজারনেম দিয়ে খুঁজুন"><button class="btn">খুঁজুন</button></form>
+  <div id="sres"></div><div id="people"></div></div>
+ <div class="pane" id="p-me"><div class="top"><h1>Me</h1><button class="ib" data-lock>🔒</button></div><div id="me"></div></div>
+ <nav><button class="on" data-t="chats"><i>💬</i>Chats</button><button data-t="people"><i>👥</i>People</button><button data-t="me"><i>🙂</i>Me</button></nav>
+</div>
+
+<div id="chat" class="screen">
+ <div class="top" style="border-bottom:1px solid var(--line)"><button class="ib" id="cback">←</button><div id="chead" style="display:flex;gap:10px;align-items:center;flex:1;min-width:0"></div><button class="ib" id="cmenu">⋮</button></div>
+ <div id="rq" style="display:none;padding:8px 14px;background:var(--card);font-size:13px"></div>
+ <div id="cmsgs"></div>
+ <form id="cf"><input class="in" id="ct" autocomplete="off" placeholder="Aa"><button type="submit">➤</button></form>
+</div>
+<div id="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,RecaptchaVerifier,signInWithPhoneNumber,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,query,where,orderBy,limit,onSnapshot,runTransaction,serverTimestamp,addDoc,writeBatch,getDocs} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// ===== এখানে আপনার Firebase কনফিগ বসান (Project settings > Your apps > Web app) =====
+const firebaseConfig={apiKey:"AIzaSyA4AekMuotYj2jXRmXlIWJLcsY7IC0ET8Q",authDomain:"my-chat-cc611.firebaseapp.com",projectId:"my-chat-cc611",appId:"1:794481425015:web:62fe6d2af2a43d9cefe472"};
+// ====================================================================================
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pair=(a,b)=>[a,b].sort().join('_');
+const ago=ms=>{const s=(Date.now()-ms)/1000;return s<60?'এইমাত্র':s<3600?Math.floor(s/60)+' মিনিট আগে':s<86400?Math.floor(s/3600)+' ঘণ্টা আগে':Math.floor(s/86400)+' দিন আগে'};
+const hm=ms=>new Date(ms).toLocaleTimeString('bn-BD',{hour:'numeric',minute:'2-digit'});
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',3500)};
+const show=id=>$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('tk'+s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const av=(n,sz=48,dot=false,ph='')=>{ph=String(ph||'').startsWith('data:image/')?ph:'';let h=0;for(const c of n||'?')h=(h*31+c.charCodeAt(0))%360;return `<div class="av" style="width:${sz}px;height:${sz}px;font-size:${sz*.42}px;background:${ph?`url(${ph}) center/cover`:`linear-gradient(135deg,hsl(${h},80%,55%),hsl(${(h+50)%360},80%,45%))`}">${ph?'':esc((n||'?')[0].toUpperCase())}${dot?'<span class="dot"></span>':''}</div>`};
+
+/* ---------- Theme ---------- */
+const applyTheme=()=>{const t=ls.get('theme')||'system';const d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'};
+applyTheme();
+
+/* ---------- Calculator + PIN ---------- */
+let unlocked=false,authReady=false,me=null,prof=null;
+let cur='0',prev=null,op=null,fresh=false,typed='';let pend=null;
+const keys=['AC','±','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','='];
+$('#keys').innerHTML=keys.map(k=>`<button class="${'÷×−+='.includes(k)?'op':['AC','±','%'].includes(k)?'fn':''}${k==='0'?' z':''}">${k}</button>`).join('');
+const fmt=x=>String(+(+x).toPrecision(12));
+const calc=(a,b,o)=>{a=+a;b=+b;return fmt(o==='+'?a+b:o==='−'?a-b:o==='×'?a*b:b?a/b:0)};
+const upd=()=>{const d=$('#disp');d.textContent=cur;d.style.fontSize=cur.length>9?'44px':cur.length>6?'58px':'72px'};
+function resetCalc(){cur='0';prev=op=null;fresh=false;typed='';upd();$('#hint').textContent=ls.get('ph')?'':'প্রথমবার: ৪ সংখ্যা লিখে = চাপুন — এটাই আপনার গোপন পাসওয়ার্ড'}
+$('#keys').onclick=async e=>{if(e.target.tagName!=='BUTTON')return;const k=e.target.textContent;
+ if(/\d/.test(k)){cur=(cur==='0'||fresh)?k:cur+k;fresh=false;typed=(typed+k).slice(-12)}
+ else if(k==='.'){if(fresh){cur='0.';fresh=false}else if(!cur.includes('.'))cur+='.';typed=''}
+ else if(k==='AC'){resetCalc();return}
+ else if(k==='±'){cur=fmt(-cur);typed=''}
+ else if(k==='%'){cur=fmt(cur/100);typed=''}
+ else if(k==='='){
+  if(op===null&&prev===null&&/^\d{4}$/.test(typed)){const h=await sha(typed),saved=ls.get('ph');
+   if(!saved){if(!pend){pend=h;toast('নিশ্চিত করতে আবার একই ৪ সংখ্যা লিখে = চাপুন');resetCalc();return}if(pend!==h){pend=null;toast('মিলেনি, আবার প্রথম থেকে লিখুন');resetCalc();return}pend=null;ls.set('ph',h);toast('গোপন পাসওয়ার্ড সেট হয়েছে। এখন এটি লিখে = চাপলে অ্যাপ খুলবে।');resetCalc();return}
+   if(h===saved){unlocked=true;resetCalc();route();return}}
+  if(op!==null&&prev!==null){cur=calc(prev,cur,op);prev=op=null}fresh=true;typed='';
+ }else{if(op!==null&&prev!==null&&!fresh)cur=calc(prev,cur,op);prev=cur;op=k;fresh=true;typed=''}
+ upd()};
+resetCalc();
+function lock(){unlocked=false;closeChat();resetCalc();route()}
+$$('[data-lock]').forEach(b=>b.onclick=lock);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&me&&unlocked)lock();else if(!document.hidden)beat()});
+function route(){show(!unlocked?'calc':!authReady?'calc':!me?'login':curChat?'chat':'app')}
+
+/* ---------- Auth ---------- */
+onAuthStateChanged(auth,async u=>{authReady=true;me=u;if(u){try{await ensureProfile();startApp()}catch(e){toast('প্রোফাইল তৈরি হয়নি: '+e.message)}}route()});
+$('#gbtn').onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){toast(e.message)}};
+let conf=null,rv=null;
+$('#sendOtp').onclick=async()=>{try{rv=rv||new RecaptchaVerifier(auth,'rc',{size:'invisible'});conf=await signInWithPhoneNumber(auth,$('#ph').value.trim(),rv);$('#l1').style.display='none';$('#l2').style.display='block'}catch(e){toast(e.message);try{rv.clear()}catch(_){}rv=null}};
+$('#verify').onclick=async()=>{try{await conf.confirm($('#otp').value.trim())}catch(e){toast('কোড ভুল: '+e.message)}};
+
+/* ---------- Profile / 8-digit UID ---------- */
+async function ensureProfile(){
+ if((await getDoc(doc(db,'users',me.uid))).exists())return;
+ const cref=doc(db,'meta','counter');
+ await runTransaction(db,async tx=>{const c=await tx.get(cref);const n=c.exists()?c.data().n+1:11111111,code=String(n);
+  tx.set(cref,{n});tx.set(doc(db,'uids',code),{owner:me.uid});
+  tx.set(doc(db,'users',me.uid),{uid8:code,name:me.displayName||('User '+code),privacy:'public',showTyping:true,showActive:true,lastActive:serverTimestamp()})});
+}
+let started=false,friends=[],blockedByMe=new Set(),blockedMe=new Set;const pc=new Map;
+const getProf=uid=>{if(!pc.has(uid))pc.set(uid,getDoc(doc(db,'users',uid)).then(s=>s.data()||{name:'User'}));return pc.get(uid)};
+function startApp(){if(started)return;started=true;
+ onSnapshot(doc(db,'users',me.uid),s=>{prof=s.data();renderMe()});
+ onSnapshot(query(collection(db,'friendships'),where('members','array-contains',me.uid)),s=>{friends=s.docs.map(d=>({id:d.id,...d.data({serverTimestamps:'estimate'})}));renderChats();renderPeople();composer()});
+ onSnapshot(query(collection(db,'blocks'),where('blocker','==',me.uid)),s=>{blockedByMe=new Set(s.docs.map(d=>d.data().blocked));renderPeople();composer()});
+ onSnapshot(query(collection(db,'blocks'),where('blocked','==',me.uid)),s=>{blockedMe=new Set(s.docs.map(d=>d.data().blocker));composer()});
+ setInterval(beat,60000);beat()}
+const beat=()=>{if(me&&started&&!document.hidden)updateDoc(doc(db,'users',me.uid),{lastActive:serverTimestamp()}).catch(()=>{})};
+const other=f=>f.members.find(x=>x!==me.uid);
+const dname=(p,friend)=>p.privacy==='private'&&!friend?'Private user':p.name;
+
+/* ---------- Tabs ---------- */
+$$('nav button').forEach(b=>b.onclick=()=>{$$('nav button').forEach(x=>x.classList.toggle('on',x===b));$$('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+b.dataset.t))});
+
+/* ---------- Chats list ---------- */
+let rt=0;
+async function renderChats(){const t=++rt;const list=friends.filter(f=>f.status==='accepted'||(f.status==='pending'&&f.lastText)).sort((a,b)=>(b.lastTs?.toMillis?.()||0)-(a.lastTs?.toMillis?.()||0));
+ const rows=await Promise.all(list.map(async f=>{const o=other(f),p=await getProf(o);const lt=f.lastTs?.toMillis?.();
+  return `<div class="row" data-o="${o}">${av(p.name,54,false,p.photo)}<div class="g"><b>${esc(p.name)}${f.status==='pending'?(f.requester===me.uid?' · রিকোয়েস্ট পাঠানো':' · নতুন রিকোয়েস্ট'):''}</b><small>${f.lastText?(f.lastFrom===me.uid?'You: ':'')+esc(f.lastText)+(lt?' · '+hm(lt):''):'নতুন বন্ধু — মেসেজ করুন'}</small></div></div>`}));
+ if(t!==rt)return;$('#chatlist').innerHTML=rows.join('')||'<div class="empty">এখনো কোনো চ্যাট নেই।<br>People ট্যাবে ৮ সংখ্যার UID দিয়ে বন্ধু খুঁজুন।</div>';
+ $$('#chatlist .row').forEach(r=>r.onclick=()=>openChat(r.dataset.o))}
+
+/* ---------- People ---------- */
+$('#sf').onsubmit=async e=>{e.preventDefault();const q=$('#sq').value.trim();const isU=/^\d{8}$/.test(q);if(!isU&&!/^[a-z0-9_.]{3,20}$/i.test(q)){toast('৮ সংখ্যার UID বা ইউজারনেম দিন');return}
+ const s=await getDocs(query(collection(db,'users'),where(isU?'uid8':'username','==',isU?q:q.toLowerCase())));const d=s.docs[0];
+ if(!d){$('#sres').innerHTML='<div class="empty" style="padding:30px">কাউকে পাওয়া যায়নি</div>';return}
+ if(d.id===me.uid){$('#sres').innerHTML='<div class="empty" style="padding:30px">এটা আপনার নিজের UID</div>';return}
+ searched={id:d.id,...d.data()};renderPeople()};
+let searched=null;
+const friendOf=uid=>friends.find(f=>f.id===pair(me.uid,uid));
+async function renderPeople(){let h='';
+ if(searched){const f=friendOf(searched.id),fr=f?.status==='accepted';
+  let btn=f?(f.status==='accepted'?'<small>বন্ধু</small>':f.requester===me.uid?'<small>রিকোয়েস্ট পাঠানো হয়েছে</small>':`<button class="btn" data-acc="${f.id}">Accept</button>`):`<button class="btn" data-add="${searched.id}">Add friend</button>`;
+  const b=blockedByMe.has(searched.id);
+  h+=`<div class="row">${av(dname(searched,fr),54,false,fr||searched.privacy!=='private'?searched.photo:'')}<div class="g"><b>${esc(dname(searched,fr))}</b><small>UID ${esc(searched.uid8)}${searched.username?' · @'+esc(searched.username):''}${searched.privacy==='private'&&!fr?' · প্রাইভেট প্রোফাইল':''}</small></div>${btn}<button class="btn g2" data-msg="${searched.id}">💬</button><button class="btn g2" data-blk="${searched.id}">${b?'Unblock':'Block'}</button></div>`}
+ const inc=friends.filter(f=>f.status==='pending'&&f.requester!==me.uid);
+ if(inc.length){h+='<h3>বন্ধুত্বের অনুরোধ</h3>';for(const f of inc){const p=await getProf(f.requester);h+=`<div class="row">${av(p.name)}<div class="g"><b>${esc(p.name)}</b><small>UID ${esc(p.uid8)}</small></div><button class="btn" data-acc="${f.id}">Accept</button><button class="btn g2" data-del="${f.id}">Delete</button></div>`}}
+ const sent=friends.filter(f=>f.status==='pending'&&f.requester===me.uid);
+ if(sent.length){h+='<h3>পাঠানো অনুরোধ</h3>';for(const f of sent){const p=await getProf(other(f));h+=`<div class="row">${av(p.name)}<div class="g"><b>${esc(dname(p,false))}</b><small>অপেক্ষায়</small></div><button class="btn g2" data-del="${f.id}">Cancel</button></div>`}}
+ if(blockedByMe.size){h+='<h3>ব্লক করা</h3>';for(const u of blockedByMe){const p=await getProf(u);h+=`<div class="row">${av(p.name)}<div class="g"><b>${esc(p.name)}</b></div><button class="btn g2" data-blk="${u}">Unblock</button></div>`}}
+ $('#sres').innerHTML='';$('#people').innerHTML=h;
+ $('#people').onclick=async e=>{const t=e.target,d=t.dataset;try{
+  if(d.add)await connect(d.add,searched?.privacy==='public');
+  else if(d.msg){await connect(d.msg,searched?.privacy==='public');openChat(d.msg)}
+  else if(d.acc)await updateDoc(doc(db,'friendships',d.acc),{status:'accepted'});
+  else if(d.del)await deleteDoc(doc(db,'friendships',d.del));
+  else if(d.blk)await toggleBlock(d.blk)}catch(x){toast(x.message)}}}
+async function connect(u,pub){if(!friendOf(u))await setDoc(doc(db,'friendships',pair(me.uid,u)),{members:[me.uid,u].sort(),requester:me.uid,status:pub?'accepted':'pending',created:serverTimestamp()})}
+async function toggleBlock(u){if(blockedByMe.has(u))await deleteDoc(doc(db,'blocks',me.uid+'_'+u));else await setDoc(doc(db,'blocks',me.uid+'_'+u),{blocker:me.uid,blocked:u})}
+
+/* ---------- Me / settings ---------- */
+function renderMe(){if(!prof)return;const th=ls.get('theme')||'system';
+ $('#me').innerHTML=`<div style="text-align:center;padding:10px"><div style="display:flex;justify-content:center"><label style="cursor:pointer">${av(prof.name,96,false,prof.photo)}<input type="file" id="pf" accept="image/*" hidden></label></div><h2 style="margin:10px 0 2px">${esc(prof.name)}</h2><div style="color:var(--sub)">${prof.username?'@'+esc(prof.username):'ইউজারনেম নেই'}</div><div style="margin:4px 20px 8px">${esc(prof.bio||'')}</div><button class="btn g2" id="cp">UID: ${esc(prof.uid8)} (কপি)</button></div>
+ <div class="row" id="ru"><span>@</span><div class="g"><b>ইউজারনেম</b></div></div>
+ <div class="row" id="rb"><span>📝</span><div class="g"><b>বায়ো</b></div></div>
+ <div class="row" id="rn"><span>✏️</span><div class="g"><b>নাম পরিবর্তন</b></div></div>
+ <div class="row"><span>🌗</span><div class="g"><b>থিম</b></div><select id="th"><option value="system">সিস্টেম</option><option value="light">লাইট</option><option value="dark">ডার্ক</option></select></div>
+ <div class="row"><span>🔒</span><div class="g"><b>প্রোফাইল</b></div><select id="pv"><option value="public">পাবলিক</option><option value="private">প্রাইভেট</option></select></div>
+ <div class="row"><span>⌨️</span><div class="g"><b>টাইপিং ইন্ডিকেটর</b></div><input type="checkbox" id="st" ${prof.showTyping?'checked':''}></div>
+ <div class="row"><span>🟢</span><div class="g"><b>অ্যাক্টিভ স্ট্যাটাস</b></div><input type="checkbox" id="sa" ${prof.showActive?'checked':''}></div>
+ <div class="row" id="rp"><span>🔢</span><div class="g"><b>গোপন পাসওয়ার্ড পরিবর্তন</b></div></div>
+ <div class="row" id="lo" style="color:#e41e3f"><span>🚪</span><div class="g"><b>লগ আউট</b></div></div>`;
+ $('#th').value=th;$('#pv').value=prof.privacy;
+ $('#cp').onclick=()=>{navigator.clipboard?.writeText(prof.uid8);toast('UID কপি হয়েছে')};
+ $('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);updateDoc(doc(db,'users',me.uid),{photo:c.toDataURL('image/jpeg',.7)}).catch(x=>toast(x.message))};im.src=URL.createObjectURL(f)};
+ $('#rb').onclick=()=>{const b=prompt('বায়ো (সর্বোচ্চ ১০০ অক্ষর)',prof.bio||'');if(b!==null)updateDoc(doc(db,'users',me.uid),{bio:b.trim().slice(0,100)})};
+ $('#ru').onclick=async()=>{const u=(prompt('ইউজারনেম (a-z, 0-9, _ . — ৩ থেকে ২০ অক্ষর)',prof.username||'')||'').trim().toLowerCase();if(!u||u===prof.username)return;if(!/^[a-z0-9_.]{3,20}$/.test(u)){toast('ইউজারনেম ঠিক নয়');return}
+  try{await runTransaction(db,async tx=>{const c=doc(db,'usernames',u);if((await tx.get(c)).exists())throw new Error('এই ইউজারনেম আগেই নেওয়া হয়েছে');tx.set(c,{owner:me.uid});if(prof.username)tx.delete(doc(db,'usernames',prof.username));tx.update(doc(db,'users',me.uid),{username:u})});toast('ইউজারনেম বদলেছে')}catch(x){toast(x.message)}};
+ $('#rn').onclick=()=>{const n=(prompt('আপনার নাম',prof.name)||'').trim();if(n)updateDoc(doc(db,'users',me.uid),{name:n.slice(0,40)})};
+ $('#th').onchange=e=>{ls.set('theme',e.target.value);applyTheme()};
+ $('#pv').onchange=e=>updateDoc(doc(db,'users',me.uid),{privacy:e.target.value});
+ $('#st').onchange=e=>updateDoc(doc(db,'users',me.uid),{showTyping:e.target.checked});
+ $('#sa').onchange=e=>updateDoc(doc(db,'users',me.uid),{showActive:e.target.checked});
+ $('#rp').onclick=async()=>{const p=prompt('নতুন ৪ সংখ্যার পাসওয়ার্ড');if(/^\d{4}$/.test(p||'')){ls.set('ph',await sha(p));toast('পাসওয়ার্ড বদলেছে')}else if(p)toast('ঠিক ৪টি সংখ্যা দিন')};
+ $('#lo').onclick=async()=>{await signOut(auth);location.reload()}}
+
+/* ---------- Chat ---------- */
+let curChat=null,un=[];
+function openChat(o){closeChat();const pid=pair(me.uid,o);curChat={pid,o,msgs:[],typing:0,op:{},lastT:0,q:0};show('chat');$('#cmsgs').innerHTML='';
+ un.push(onSnapshot(doc(db,'quota',me.uid+'_'+o),s=>{curChat.q=s.exists()?s.data().n:0;composer()}));
+ un.push(onSnapshot(doc(db,'users',o),s=>{curChat.op=s.data()||{};head()}));
+ un.push(onSnapshot(doc(db,'chats',pid),s=>{curChat.typing=s.data()?.typing?.[o]||0;head();renderMsgs();setTimeout(()=>{head();renderMsgs()},5200)}));
+ un.push(onSnapshot(query(collection(db,'chats',pid,'messages'),orderBy('ts'),limit(300)),s=>{curChat.msgs=s.docs.map(d=>({id:d.id,...d.data({serverTimestamps:'estimate'})}));renderMsgs();markSeen()}));
+ composer()}
+function closeChat(){un.forEach(f=>f());un=[];curChat=null;if(unlocked&&me)show('app')}
+$('#cback').onclick=closeChat;
+const isFriend=o=>friendOf(o)?.status==='accepted';
+function head(){if(!curChat)return;const p=curChat.op,nm=dname(p,isFriend(curChat.o))||'';const typing=Date.now()-curChat.typing<5000&&p.showTyping!==false;
+ const la=p.lastActive?.toMillis?.(),on=p.showActive!==false&&la&&Date.now()-la<120000;
+ const st=typing?'টাইপ করছে…':p.showActive===false?'':on?'এখন অ্যাক্টিভ':la?'অ্যাক্টিভ ছিল '+ago(la):'';
+ $('#chead').innerHTML=av(nm,40,on,isFriend(curChat.o)||p.privacy!=='private'?p.photo:'')+`<div style="min-width:0"><b>${esc(nm)}</b><small style="display:block;color:var(--sub)">${st}</small></div>`}
+function renderMsgs(){if(!curChat)return;const box=$('#cmsgs'),atEnd=box.scrollHeight-box.scrollTop-box.clientHeight<120;let h='',pt=0;
+ const lastMine=[...curChat.msgs].reverse().find(m=>m.from===me.uid&&!m.deleted)?.id;
+ curChat.msgs.forEach(m=>{const t=m.ts?.toMillis?.()||Date.now();if(t-pt>600000)h+=`<div class="ts">${hm(t)}</div>`;pt=t;const mine=m.from===me.uid;
+  h+=`<div class="m ${mine?'me':''} ${m.deleted?'del':''}" data-id="${m.id}" data-mine="${mine}">${m.deleted?'মেসেজটি আনসেন্ড করা হয়েছে':esc(m.text)}</div>`;
+  if(m.id===lastMine)h+=`<div class="st">${m.seen?'দেখেছে':'পাঠানো হয়েছে · '+ago(t)}</div>`});
+ if(Date.now()-curChat.typing<5000&&curChat.op.showTyping!==false)h+='<div class="m">• • •</div>';
+ box.innerHTML=h;if(atEnd)box.scrollTop=box.scrollHeight;
+ $$('#cmsgs .m[data-mine=true]:not(.del)').forEach(el=>el.onclick=()=>{if(confirm('এই মেসেজ আনসেন্ড করবেন?'))updateDoc(doc(db,'chats',curChat.pid,'messages',el.dataset.id),{deleted:true,text:''})})}
+function markSeen(){if(!curChat||document.hidden)return;const un2=curChat.msgs.filter(m=>m.from!==me.uid&&!m.seen);if(!un2.length)return;const b=writeBatch(db);un2.forEach(m=>b.update(doc(db,'chats',curChat.pid,'messages',m.id),{seen:true}));b.commit().catch(()=>{})}
+function composer(){if(!curChat)return;const o=curChat.o,f=friendOf(o);let msg='';
+ if(blockedByMe.has(o))msg='আপনি ব্লক করেছেন';else if(blockedMe.has(o))msg='মেসেজ পাঠানো যাচ্ছে না';
+ else if(!f)msg='মেসেজ পাঠানো যাচ্ছে না';else if(f.status==='pending'){if(f.requester!==me.uid)msg='Accept করলে উত্তর দিতে পারবেন';else if((curChat.q||0)>=3)msg='গ্রহণ না করা পর্যন্ত আর মেসেজ দেওয়া যাবে না'}
+ const i=$('#ct');i.disabled=!!msg;i.placeholder=msg||'Aa';banner(f)}
+function banner(f){const b=$('#rq');let h='';
+ if(f&&f.status==='pending'){h=f.requester===me.uid?`রিকোয়েস্ট পাঠানো হয়েছে। গ্রহণ না করা পর্যন্ত আর ${Math.max(0,3-(curChat.q||0))}টি টেক্সট মেসেজ দিতে পারবেন।`:'মেসেজ রিকোয়েস্ট — Accept না করা পর্যন্ত উত্তর দেওয়া যাবে না।<br><br><button class="btn" data-a="acc">Accept</button> <button class="btn g2" data-a="del">Delete</button> <button class="btn g2" data-a="blk">Block</button>'}
+ b.style.display=h?'block':'none';b.innerHTML=h}
+$('#rq').onclick=async e=>{const a=e.target.dataset.a;if(!a||!curChat)return;const f=friendOf(curChat.o);try{if(a==='acc')await updateDoc(doc(db,'friendships',f.id),{status:'accepted'});else if(a==='del'){await deleteDoc(doc(db,'friendships',f.id));closeChat()}else{await toggleBlock(curChat.o);closeChat()}}catch(x){toast(x.message)}};
+$('#ct').oninput=()=>{if(!curChat||!prof?.showTyping)return;if(Date.now()-curChat.lastT>2000){curChat.lastT=Date.now();setDoc(doc(db,'chats',curChat.pid),{typing:{[me.uid]:Date.now()}},{merge:true}).catch(()=>{})}};
+$('#cf').onsubmit=async e=>{e.preventDefault();const t=$('#ct').value.trim(),f=curChat&&friendOf(curChat.o);if(!t||!f||$('#ct').disabled)return;$('#ct').value='';
+ try{const b=writeBatch(db),up={lastText:t.slice(0,60),lastFrom:me.uid,lastTs:serverTimestamp()};if(f.status==='pending')b.set(doc(db,'quota',me.uid+'_'+curChat.o),{n:(curChat.q||0)+1});
+  b.set(doc(collection(db,'chats',curChat.pid,'messages')),{from:me.uid,text:t.slice(0,2000),ts:serverTimestamp(),seen:false,deleted:false});
+  b.update(doc(db,'friendships',f.id),up);await b.commit()}catch(x){toast('পাঠানো যায়নি: '+x.message)}};
+$('#cmenu').onclick=()=>{if(!curChat)return;const o=curChat.o,b=blockedByMe.has(o);if(confirm(b?'আনব্লক করবেন?':'এই ইউজারকে ব্লক করবেন?'))toggleBlock(o)};
+
+try{const I192="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAEYUlEQVR4nO3dMW4USRiG4QLtFVYkiBSRc6yNfBBHHIsccQSLS2xgyTuBWWbm66r6f/fzhEhTjKtfl01PVfPu48dPA+71fvcboDcBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARARH5a/cbGB8+/L37LfT29PRr49++LSDdHOVlJreUtCEg6UzyPLGLM1r9O5B6Zls8w0sDUs8aK+d5XUDqWWnZbC8KSD3rrZnzFQGpZ5cFM+9GIpHpAVl+9po9/1YgIgIiMjcgP78qmHoVrEBE9n8af+nh4WH3W2jg8fFx91v4z7upTyi7afFUz01uymjeJ6wlApLOfa5vaF5AfgdqrMI33v6AKsxCX9tnb3NA27/+N2DvHO5fgWhNQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERERARAREREBEBEREQEQERGRzQKWeldTU3jm0AhHZH5BFKLF99vYHNArMQlMV5q1EQKPGXPRSZMZKPCPxhedNXeOOdN74QzaZzUM2KUpARAREREBEBEREQEQERERARAREREBEBEREQEQERKTWf7r7qs+fv7z65z9//mgx/hjj+z+vD/X12+t/dSOlt3P87tJeSi7z7PHH79O5tCCj0+0HuubSXrr1Ms8ef1yXzqWpGZ1rP9CtV/fWl8wef9xez30vqaBcQHdc3ZteOHv8EaTQsaFaAd19da98+ezxRxxBu4ZqBUQ7hQIKl4c/DjJ7/HHQ+tFrESoUEB0JiIiAiAiIiICIFArokA8v/2eQ2eOPgz6O6PUJa6GA6KhWQOEi8ceXzx5/xOtHr+VnVAtoBNf4yhfOHn8EEbSrZxQMaNx1jW96yezxx10pdKxnlN0P9MyGsqOcbkPZJVtac6cOiNy5diTSiICICIiIgIgIiIiAiDjafIr7QPOUvg/kTvRRTncj0dHmY53rRqKjzY2UC8jR5l5qBeRoc7uGagVEO4UCcrT5wEGWKRQQHQmIiICICIiIgIgUCsjR5gMHWaZQQHRUKyBHm3stP6NaQMPR5m7KBTQcbW6l6H6gZzaUHeV0G8ou2dKaO3VA5M61I5FGBEREQEQERERARARExNHmU9wHmqf0fSB3oo9yuhuJjjYf61w3Eh1tbqRcQI4291IrIEeb2zVUKyDaKRSQo80HDrJMoYDoSEBEBEREQEQERKRQQI42HzjIMoUCoqNaATna3Gv5GdUCGo42d1MuoOFocytF9wM9s6HsKKfbUHbJltbcqQMid64diTQyN6B54XO9qVfBCkREQESmB+Sn2F6z598K9JYt+O5dEZBF6A1btAJpaL01c77uR5iGVlo220t/B9LQGivnefUv0Rqa6unp1+IZ3vCvsPVf5ElsmdVtD5h6+Wp94Bra+924/wllVqPW3EgkIiAiAiIiICICIiIgIgIiIiAiAiIiICICIiIgIgIiIiAiAiIiICICIvIvOFAHR01XQ8AAAAAASUVORK5CYII=",I512="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAAQH0lEQVR4nO3dQW7bWBaG0ZdGthB4YmQa9LyWVaMsJKNaVuaNLMHIJnrAgotlybYskbz36T9n3IBuvSbvRzE2/Onx8esAIM9/qgcAoIYAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIT6XD3AnXt4+FI9Aszt6el39Qh3SwA2ZuPDtl7cU3qwIQHYhr0Px3i+15TgdgJwK6sfSiy3ngzcQgCuZO9DBzJwCz8FdA3bH1p5ePjirryCbwAf4yKDtnwb+CjfAD7A9of+3KeX8w3gIi4pmIivAhfyDeB9tj/MyJ37LgF4h2sI5uX+fZsAvMXVA7NzF79BAF7luoH74F5+jQCc54qBe+KOPksAznCtwP1xX58SgJdcJXCv3N0vCMC/uD7gvrnH1wQAIJQA/MOjASRwpz8TgL+5JiCH+30hAAChBGAMjwOQx10/BGC4DoBUAgCE8vAnAACh0gPgEQCShW+A9AAAxIoOQHj8gZG9B6IDAJBMAABC5QYg+XsfsBa7DXIDABBOAABCCQBAKAEACBUagNh/8wHOytwJn6sHYHz//r16BKjx48eP6hGifXp8/Fo9Q4EOtbf34VmHEjw9/a4e4WgCUMDqh7NqMyAAKaoCYPXDu6oyEBiA0H8ELmH7wyXcKYcRgIO4puFy7pdjCMARXM3wUe6aAwjA7lzHcB33zt4EYF+uYLiFO2hXArAj1y7czn20HwEACCUAe/HYAltxN+1EAABCCcAuPLDAttxTexAAgFACABBKALbnuyrswZ21OQEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACAMzhx48f1SPcGwHYnssUmIIAAIQSAIBQArALb4FgW+6pPQgAQCgB2IsHFtiKu2knAgC0ZvvvRwB25MIFOhOAfWkA3MIdtCsB2J0rGK7j3tmbABzBdQwf5a45gAAcxNUMl3O/HOPT4+PX6hkKPDx8Kfnc79+/l3wuzKJw9T89/a766CoCUEAG4KzaB38BSFEbgIUMwLMO73wEIEWHADxTAjJ1WPprApCiVQCADgID4KeAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFCfqwfgSt++/feS/9mvX//be5JCDmGM8fPPi/7r/vjrorMiyqfHx6/VMxR4ePhSPcI1Ltx3r7mPPegQxsVL/zVicNbT0+/qEY4mABO4ceWdmnEJOoRx894/pQRrApBilgBsvvXWZtmADmHssPrXZGAhACn6B2DXrbfWeQM6hLHz6l+TAQFI0TkAh229tW4b0CGMA1f/WnIGAgPgx0B7KVl8hZ97lkMYRdu/8HMpIQCN1C6gJuvPIYzqLawBObwCaqHJ3llUvQlxCKPZ8k17HeQVEAVaLb5RNI9DGM22/+g3D5sTgGLdFt/i4Kkcwui6bXtOxVYEACCUAFTq+eS7OGw2hzB6P2h3no0bCUCZzotvccCEDmHMsGH7T8h1BKBG/8W32HVOhzDm2a2zzMmHCABAKAEoMMuT72KnaR3CmO2xeq5puYQAAIQSgKPN9eS72HxmhzDmfKCecWbeIAAAoQQAIJQAHGrGVx+LDSd3CGPmdynzTs4pAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAIf69WvW36LccHKHMMb4469Zfx163sk5JQAAoQQAIJQAHG3GFyCbz+wQxpzvUmacmTcIAEAoASgw1/PvTtM6hDHbA/Vc03IJAQAIJQA1Znn+3XVOhzDmeayeZU4+RADK9F9/B0zoEMYMu7X/hFxHACp1Xn+HzeYQRu8N23k2biQAAKEEoFjP59+Dp3IIo+uDds+p2IoA1Ou2/krmcQij37btNg+b+/T4+LV6hgIPD1+qRzjj27fi+63DFnYIY4yffxbPkLn6n55+V49wNN8AGqldPR0W36geo8kh1O7fzO2fSQB6qVpATRbfwiGMui1s+0fxCqipw96EtNp6LziEceDrIKs/8BWQALS26wbsvPXWHMLYOQNW/0IAUswSgMXmG3CWrbfmEMYOGbD61wQgxVwBeHbjEpxx5Z1yCOPmEtj7ZwlAikkDsHbhHryPffcahzAujoGl/y4BSHEHAQC2FRgAPwYKEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAqM/VA3Alfw99OIQxhj8Kzw38UfiZXLjvXnMfe9AhjIuX/mvE4KzAPwovABO4ceWdmnEJOoRx894/pQRrApBilgBsvvXWZtmADmHssPrXZGAhACn6B2DXrbfWeQM6hLHz6l+TAQFI0TkAh229tW4b0CGMA1f/WnIGAgPgx0B7KVl8hZ97lkMYRdu/8HMpIQCN1C6gJuvPIYzqLawBObwCaqHJ3llUvQlxCKPZ8k17HeQVEAVaLb5RNI9DGM22/+g3D5sTgGLdFt/i4Kkcwui6bXtOxVYEACCUAFTq+eS7OGw2hzB6P2h3no0bCUCZzotvccCEDmHMsGH7T8h1BKBG/8W32HVOhzDm2a2zzMmHCABAKAEoMMuT72KnaR3CmO2xeq5puYQAAIQSgKPN9eS72HxmhzDmfKCecWbeIAAAoQQAIJQAHGrGVx+LDSd3CGPmdynzTs4pAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAIf69WvW36LccHKHMMb4469Zfx163sk5JQAAoQQAIJQAHG3GFyCbz+wQxpzvUmacmTcIAEAoASgw1/PvTtM6hDHbA/Vc03IJAQAIJQA1Znn+3XVOhzDmeayeZU4+RADK9F9/B0zoEMYMu7X/hFxHACp1Xn+HzeYQRu8N23k2biQAAKEEoFjP59+Dp3IIo+uDds+p2IoA1Ou2/krmcQij37btNg+b+/T4+LV6hgIPD1+qRzjj27fi+63DFnYIY4yffxbPkLn6n55+V49wNN8AGqldPR0W36geo8kh1O7fzO2fSQB6qVpATRbfwiGMui1s+0fxCqipw96EtNp6LziEceDrIKs/8BWQALS26wbsvPXWHMLYOQNW/0IAUswSgMXmG3CWrbfmEMYOGbD61wQgxVwBeHbjEpxx5Z1yCOPmEtj7ZwlAikkDsHbhHryPffcahzAujoGl/y4BSHEHAQC2FRgAPwYKEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCfa4egCv5c7jDIYwx/E1gbuBvAs/kwn33mvvYgw5hXLz0XyMGZwX+TWABmMCNK+/UjEvQIYyb9/4pJVgTgBSzBGDzrbc2ywZ0CGOH1b8mAwsBSNE/ALtuvbXOG9AhjJ1X/5oMCECKzgE4bOutdduADmEcuPrXkjMQGAA/BtpLyeIr/NyzHMIo2v6Fn0sJAWikdgE1WX8OYVRvYQ3I4RVQC032zqLqTYhDGM2Wb9rrIK+AKNBq8Y2ieRzCaLb9R7952JwAFOu2+BYHT+UQRtdt23MqtiIAAKEEoFLPJ9/FYbM5hNH7QbvzbNxIAMp0XnyLAyZ0CGOGDdt/Qq4jADX6L77FrnM6hDHPbp1lTj5EAABCCUCBWZ58FztN6xDGbI/Vc03LJQQAIJQAHG2uJ9/F5jM7hDHnA/WMM/MGAQAIJQAAoQTgUDO++lhsOLlDGDO/S5l3ck4JAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBONSvX7P+FuWGkzuEMcYff83669DzTs4pAQAIJQAAoQTgaDO+ANl8Zocw5nyXMuPMvEEAAEIJQIG5nn93mtYhjNkeqOealksIAEAoAagxy/PvrnM6hDHPY/Usc/IhAlCm//o7YEKHMGbYrf0n5DoCUKnz+jtsNocwem/YzrNxIwEACCUAxXo+/x48lUMYXR+0e07FVgSgXrf1VzKPQxj9tm23edjcp8fHr9UzFHh4+FI9whnfvhXfbx22sEMYY/z8s3iGzNX/9PS7eoSj+QbQSO3q6bD4RvUYTQ6hdv9mbv9MAtBL1QJqsvgWDmHUbWHbP4pXQE0d9iak1dZ7wSGMA18HWf2Br4AEoLVdN2DnrbfmEMbOGbD6FwKQYpYALDbfgLNsvTWHMHbIgNW/JgAp5grAsxuX4Iwr75RDGDeXwN4/SwBSTBqAtQv34H3su9c4hHFxDCz9dwlAijsIALCtwAD4MVCAUKEBCEw98IbMnRAaAAAEACCUAACEEgAgXeY/AIzkAMT+Xw6wyA0AQDgBAAgVHQBvgYDkPRAdAIBk6QFIjj8QvgHSAwAQSwDSHwEglntfAABCCcAYHgQgj7t+CABALAH4m8cByOF+XwjAP1wTkMCd/kwAgCC2/5oA/IuLA8ghAC9pANwrd/cLAnCGqwTuj/v6lACc51qBe+KOPksAXuWKgfvgXn6NALzFdQOzcxe/QQDe4eqBebl/3yYA73MNwXSenn67c98lABdxMcFE3K0XEoAPcFVBf+7Ty32uHmAyy7X18PClehDgJav/owTgGjIArVj91xGA68kAlLP6byEAt5IBKGH1304AtvF8LSoB7MfS35YAbOzFBaoHcCNLfz8CsC/XLtCW3wMACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACCUAAKEEACCUAACEEgCAUAIAEEoAAEIJAEAoAQAIJQAAoQQAIJQAAIQSAIBQAgAQSgAAQgkAQCgBAAglAAChBAAglAAAhBIAgFACABBKAABCCQBAKAEACPV/wecUhkoMHVkAAAAASUVORK5CYII=",ic=(n,u)=>({src:u,sizes:n+'x'+n,type:'image/png',purpose:'any'}),mf={name:'Calculator',short_name:'Calculator',start_url:location.href.split('#')[0],scope:location.href.replace(/[^/]*$/,''),display:'standalone',background_color:'#000000',theme_color:'#000000',icons:[ic(192,I192),ic(512,I512)]},l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/manifest+json'}));document.head.appendChild(l)}catch(e){}
+</script></body></html>

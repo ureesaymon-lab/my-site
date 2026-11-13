@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>Calculator</title>
+<style>
+:root{--bg:#fff;--fg:#050505;--sub:#65676b;--bub:#e4e6eb;--card:#f0f2f5;--line:#dadde1;--blue:#0084ff;color-scheme:light}
+:root[data-theme=dark]{--bg:#18191a;--fg:#e4e6eb;--sub:#b0b3b8;--bub:#3a3b3c;--card:#242526;--line:#3e4042;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{height:100%;margin:0}
+body{font-family:system-ui,-apple-system,"Noto Sans Bengali",Roboto,sans-serif;background:var(--bg);color:var(--fg);overflow:hidden}
+.screen{display:none;position:fixed;inset:0;flex-direction:column;background:var(--bg);padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+.screen.on{display:flex}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{display:block}
+#calc{background:#000;color:#fff}
+#disp{flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding:24px;font-size:72px;font-weight:300;word-break:break-all;text-align:right}
+#hint{color:#ff9f0a;font-size:13px;text-align:right;padding:0 24px 8px;min-height:22px}
+#keys{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px 14px 22px}
+#keys button{aspect-ratio:1;border:0;border-radius:50%;font-size:32px;background:#333;color:#fff}
+#keys button:active{filter:brightness(1.4)}#keys .op{background:#ff9f0a}#keys .fn{background:#a5a5a5;color:#000}
+#keys .z{grid-column:span 2;aspect-ratio:auto;border-radius:44px;text-align:left;padding-left:32px}
+.top{display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:56px}
+.top h1{margin:0;font-size:26px;font-weight:800;flex:1}
+.ib{background:none;border:0;padding:8px;color:var(--fg);display:flex}
+.av{border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;position:relative}
+.dot{position:absolute;right:0;bottom:0;width:30%;height:30%;border-radius:50%;background:#31a24c;border:2px solid var(--bg)}
+.pane{display:none;flex:1;overflow-y:auto}.pane.on{display:block}
+input.in,select{width:100%;border:0;background:var(--card);color:var(--fg);border-radius:22px;padding:12px 16px;font-size:16px;outline:0}
+select{width:auto;padding:8px 12px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 16px}.row .g{flex:1;min-width:0}
+.row b{display:block}.row small{color:var(--sub);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri{width:36px;height:36px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;flex:none}
+.btn{border:0;border-radius:20px;background:var(--blue);color:#fff;padding:9px 16px;font-weight:600}.btn.g2{background:var(--card);color:var(--fg)}.btn.big{width:100%;padding:14px;font-size:16px;border-radius:26px}
+h3{margin:14px 16px 4px;font-size:14px;color:var(--sub)}
+.empty{text-align:center;color:var(--sub);padding:60px 30px;line-height:1.6}
+nav{display:flex;border-top:1px solid var(--line)}
+nav button{flex:1;background:none;border:0;padding:8px 0 8px;font-size:11px;color:var(--sub);position:relative;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button.on{color:var(--blue)}nav button.on svg{fill:currentColor;fill-opacity:.16}
+.badge{position:absolute;top:3px;left:54%;background:#e41e3f;color:#fff;border-radius:10px;font-size:11px;min-width:18px;padding:1px 5px;line-height:15px}
+.sw{position:relative;width:50px;height:30px;flex:none;direction:ltr}
+.sw input{opacity:0;position:absolute;inset:0;width:100%;height:100%;margin:0;z-index:1;cursor:pointer}
+.sw span{position:absolute;inset:0;background:#8a8d91;border-radius:30px;transition:.2s}
+.sw span:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+.sw input:checked+span{background:var(--blue)}.sw input:checked+span:before{transform:translateX(20px)}
+#login{padding:30px 28px;justify-content:center;gap:12px;overflow-y:auto}
+.logo{width:76px;height:76px;margin:0 auto;border-radius:50%;background:linear-gradient(135deg,#00b2ff,#006aff,#a033ff);display:flex;align-items:center;justify-content:center;color:#fff}
+#cmsgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.m{max-width:76%;padding:8px 13px;border-radius:19px;background:var(--bub);align-self:flex-start;word-break:break-word;white-space:pre-wrap;line-height:1.35}
+.m.me{background:linear-gradient(180deg,#00a0ff,#0070ff);color:#fff;align-self:flex-end}.m.del{background:none;border:1px solid var(--line);color:var(--sub);font-style:italic}
+.ts{align-self:center;font-size:12px;color:var(--sub);margin:10px 0 4px}.st{align-self:flex-end;font-size:11px;color:var(--sub);margin:2px 6px 4px}
+#cf{display:flex;gap:8px;padding:8px 10px;align-items:center;border-top:1px solid var(--line)}
+#cf button{background:none;border:0;color:var(--blue);display:flex;padding:6px}#cf input{flex:1}
+#pm{display:none;position:fixed;inset:0;z-index:8;background:var(--bg);overflow-y:auto;padding-top:env(safe-area-inset-top,0)}
+#toast{position:fixed;left:16px;right:16px;bottom:90px;background:#333;color:#fff;padding:12px 14px;border-radius:12px;display:none;z-index:9;font-size:14px}
+</style></head><body>
+
+<div id="calc" class="screen on"><div id="disp">0</div><div id="hint"></div><div id="keys"></div></div>
+
+<div id="login" class="screen">
+ <div class="logo"></div><h2 style="text-align:center;margin:4px 0 14px">Talkly</h2>
+ <div id="l1"><input class="in" id="ph" type="tel" value="+880" placeholder="ফোন নম্বর (+8801...)"><br><br><button class="btn big" id="sendOtp">কোড পাঠান</button></div>
+ <div id="l2" style="display:none"><input class="in" id="otp" inputmode="numeric" placeholder="৬ সংখ্যার কোড"><br><br><button class="btn big" id="verify">লগ ইন</button></div>
+ <div style="text-align:center;color:var(--sub);margin:6px">অথবা</div>
+ <button class="btn big g2" id="gbtn">Google দিয়ে চালিয়ে যান</button>
+ <div id="rc"></div>
+</div>
+
+<div id="app" class="screen">
+ <div class="pane on" id="p-chats"><div class="top"><h1 data-i="chats"></h1><button class="ib" data-lock></button></div><div id="chatlist"></div></div>
+ <div class="pane" id="p-people"><div class="top"><h1 data-i="people"></h1></div>
+  <form id="sf" style="display:flex;gap:8px;padding:0 16px"><input class="in" id="sq" maxlength="20"><button class="btn" id="sbtn"></button></form>
+  <div id="sres"></div><div id="people"></div></div>
+ <div class="pane" id="p-notifs"><div class="top"><h1 data-i="notifs"></h1></div><div id="notifs"></div></div>
+ <div class="pane" id="p-menu"><div class="top"><h1 data-i="menu"></h1><button class="ib" data-lock></button></div><div id="me"></div></div>
+ <nav id="nav"></nav>
+</div>
+
+<div id="chat" class="screen">
+ <div class="top" style="border-bottom:1px solid var(--line)"><button class="ib" id="cback"></button><div id="chead" style="display:flex;gap:10px;align-items:center;flex:1;min-width:0"></div><button class="ib" id="cmenu"></button></div>
+ <div id="rq" style="display:none;padding:8px 14px;background:var(--card);font-size:13px"></div>
+ <div id="cmsgs"></div>
+ <form id="cf"><input class="in" id="ct" autocomplete="off" placeholder="Aa"><button type="submit" id="sendb"></button></form>
+</div>
+<div id="pm"></div>
+<div id="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,RecaptchaVerifier,signInWithPhoneNumber,signOut} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,query,where,orderBy,limit,onSnapshot,runTransaction,serverTimestamp,addDoc,writeBatch,getDocs} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig={apiKey:"AIzaSyA4AekMuotYj2jXRmXlIWJLcsY7IC0ET8Q",authDomain:"my-chat-cc611.firebaseapp.com",projectId:"my-chat-cc611",appId:"1:794481425015:web:62fe6d2af2a43d9cefe472"};
+
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pair=(a,b)=>[a,b].sort().join('_');
+const ago=ms=>{const s=(Date.now()-ms)/1000;return s<60?'এইমাত্র':s<3600?Math.floor(s/60)+' মিনিট আগে':s<86400?Math.floor(s/3600)+' ঘণ্টা আগে':Math.floor(s/86400)+' দিন আগে'};
+const hm=ms=>new Date(ms).toLocaleTimeString('bn-BD',{hour:'numeric',minute:'2-digit'});
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const toast=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',3500)};
+const show=id=>$$('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('tk'+s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const av=(n,sz=48,dot=false,ph='')=>{ph=String(ph||'').startsWith('data:image/')?ph:'';let h=0;for(const c of n||'?')h=(h*31+c.charCodeAt(0))%360;return `<div class="av" style="width:${sz}px;height:${sz}px;font-size:${sz*.42}px;background:${ph?`url(${ph}) center/cover`:`linear-gradient(135deg,hsl(${h},80%,55%),hsl(${(h+50)%360},80%,45%))`}">${ph?'':esc((n||'?')[0].toUpperCase())}${dot?'<span class="dot"></span>':''}</div>`};
+
+/* ---------- Icons (SVG) ---------- */
+const P={chat:'<path d="M21 11.5a8.4 8.4 0 0 1-12.2 7.5L3 20.5l1.6-5A8.4 8.4 0 1 1 21 11.5z"/>',
+people:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17.5 14c2.5.2 4 2 4 4.5"/>',
+bell:'<path d="M6 17v-6a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21a2 2 0 0 0 4 0"/>',
+menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+back:'<path d="M15 5l-7 7 7 7"/>',send:'<path d="M3 11l18-8-8 18-2-8z"/>',
+more:'<circle cx="12" cy="5" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="19" r="1.3"/>',
+at:'<circle cx="12" cy="12" r="3.5"/><path d="M15.5 12v1.5a2.5 2.5 0 0 0 5 0V12a8.5 8.5 0 1 0-3.4 6.8"/>',
+note:'<path d="M5 4h11l3 3v13H5z"/><path d="M8 11h8M8 15h6"/>',
+pen:'<path d="M4 20l1-4L16 5l3 3L8 19z"/>',
+moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+shield:'<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/>',
+kb:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M8 14h8"/>',
+pulse:'<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+hash:'<path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/>',
+out:'<path d="M10 4H5v16h5M16 8l4 4-4 4M20 12H9"/>',
+globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+x:'<path d="M6 6l12 12M18 6L6 18"/>'};
+const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+
+/* ---------- Languages ---------- */
+const K='chats,people,notifs,menu,username,bio,name,theme,profile,typing,active,pin,logout,language,sys,light,dark,pub,priv,fr,mr,none,add,msg,accept,del,search,know,nouname'.split(',');
+const L={
+en:['Chats','People','Notifications','Menu','Username','Bio','Change name','Theme','Profile','Typing indicator','Active status','Change secret PIN','Log out','Language','System','Light','Dark','Public','Private','Friend requests','Message requests','Nothing new','Add friend','Message','Accept','Delete','Search by UID or username','People you may know','No username'],
+bn:['চ্যাট','পিপল','নোটিফিকেশন','মেনু','ইউজারনেম','বায়ো','নাম পরিবর্তন','থিম','প্রোফাইল','টাইপিং ইন্ডিকেটর','অ্যাক্টিভ স্ট্যাটাস','গোপন পাসওয়ার্ড পরিবর্তন','লগ আউট','ভাষা','সিস্টেম','লাইট','ডার্ক','পাবলিক','প্রাইভেট','বন্ধুত্বের অনুরোধ','মেসেজ রিকোয়েস্ট','নতুন কিছু নেই','বন্ধু করুন','মেসেজ','গ্রহণ','মুছুন','UID বা ইউজারনেম দিয়ে খুঁজুন','যাদের চিনতে পারেন','ইউজারনেম নেই'],
+hi:['चैट','लोग','सूचनाएँ','मेनू','यूज़रनेम','बायो','नाम बदलें','थीम','प्रोफ़ाइल','टाइपिंग संकेत','सक्रिय स्थिति','गुप्त पिन बदलें','लॉग आउट','भाषा','सिस्टम','लाइट','डार्क','सार्वजनिक','निजी','मित्र अनुरोध','संदेश अनुरोध','कुछ नया नहीं','मित्र जोड़ें','संदेश','स्वीकारें','हटाएँ','UID या यूज़रनेम से खोजें','जिन्हें आप जानते होंगे','कोई यूज़रनेम नहीं'],
+ur:['چیٹس','لوگ','اطلاعات','مینو','صارف نام','بایو','نام تبدیل کریں','تھیم','پروفائل','ٹائپنگ انڈیکیٹر','فعال حالت','خفیہ پن تبدیل کریں','لاگ آؤٹ','زبان','سسٹم','لائٹ','ڈارک','عوامی','نجی','دوستی کی درخواستیں','پیغام کی درخواستیں','کچھ نیا نہیں','دوست بنائیں','پیغام','قبول کریں','حذف کریں','UID یا صارف نام سے تلاش کریں','جنہیں آپ جانتے ہوں','کوئی صارف نام نہیں'],
+ar:['الدردشات','الأشخاص','الإشعارات','القائمة','اسم المستخدم','النبذة','تغيير الاسم','المظهر','الملف الشخصي','مؤشر الكتابة','حالة النشاط','تغيير الرمز السري','تسجيل الخروج','اللغة','النظام','فاتح','داكن','عام','خاص','طلبات الصداقة','طلبات الرسائل','لا جديد','إضافة صديق','رسالة','قبول','حذف','ابحث بالمعرّف أو اسم المستخدم','أشخاص قد تعرفهم','لا يوجد اسم مستخدم'],
+es:['Chats','Personas','Notificaciones','Menú','Usuario','Biografía','Cambiar nombre','Tema','Perfil','Indicador de escritura','Estado activo','Cambiar PIN secreto','Cerrar sesión','Idioma','Sistema','Claro','Oscuro','Público','Privado','Solicitudes de amistad','Solicitudes de mensaje','Nada nuevo','Añadir amigo','Mensaje','Aceptar','Eliminar','Buscar por UID o usuario','Personas que quizá conozcas','Sin usuario'],
+fr:['Discussions','Personnes','Notifications','Menu',"Nom d'utilisateur",'Bio','Changer le nom','Thème','Profil','Indicateur de saisie','Statut actif','Changer le code secret','Déconnexion','Langue','Système','Clair','Sombre','Public','Privé',"Demandes d'amis",'Demandes de message','Rien de nouveau','Ajouter','Message','Accepter','Supprimer','Chercher par UID ou nom','Personnes que vous connaissez peut-être',"Aucun nom d'utilisateur"]};
+const LN={bn:'বাংলা',en:'English',hi:'हिन्दी',ur:'اردو',ar:'العربية',es:'Español',fr:'Français'};
+let lang=ls.get('lang')||'bn';if(!L[lang])lang='bn';
+const T=k=>{const i=K.indexOf(k);return (L[lang]||L.en)[i]||L.en[i]};
+
+/* ---------- Theme ---------- */
+const applyTheme=()=>{const t=ls.get('theme')||'system';const d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'};
+applyTheme();
+
+/* ---------- State ---------- */
+let unlocked=false,authReady=false,me=null,prof=null,curTab='chats',searched=null,allUsers=[],pu=null;
+let started=false,friends=[],blockedByMe=new Set(),blockedMe=new Set;const pc=new Map;
+let cur='0',prev=null,op=null,fresh=false,typed='';let pend=null;
+let curChat=null,un=[],rt=0,rn=0;
+
+/* ---------- Calculator + PIN ---------- */
+const keys=['AC','±','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','='];
+$('#keys').innerHTML=keys.map(k=>`<button class="${'÷×−+='.includes(k)?'op':['AC','±','%'].includes(k)?'fn':''}${k==='0'?' z':''}">${k}</button>`).join('');
+const fmt=x=>String(+(+x).toPrecision(12));
+const calc=(a,b,o)=>{a=+a;b=+b;return fmt(o==='+'?a+b:o==='−'?a-b:o==='×'?a*b:b?a/b:0)};
+const upd=()=>{const d=$('#disp');d.textContent=cur;d.style.fontSize=cur.length>9?'44px':cur.length>6?'58px':'72px'};
+function resetCalc(){cur='0';prev=op=null;fresh=false;typed='';upd();$('#hint').textContent=ls.get('ph')?'':'প্রথমবার: ৪ সংখ্যা লিখে = চাপুন — এটাই আপনার গোপন পাসওয়ার্ড'}
+$('#keys').onclick=async e=>{if(e.target.tagName!=='BUTTON')return;const k=e.target.textContent;
+ if(/\d/.test(k)){cur=(cur==='0'||fresh)?k:cur+k;fresh=false;typed=(typed+k).slice(-12)}
+ else if(k==='.'){if(fresh){cur='0.';fresh=false}else if(!cur.includes('.'))cur+='.';typed=''}
+ else if(k==='AC'){resetCalc();return}
+ else if(k==='±'){cur=fmt(-cur);typed=''}
+ else if(k==='%'){cur=fmt(cur/100);typed=''}
+ else if(k==='='){
+  if(op===null&&prev===null&&/^\d{4}$/.test(typed)){const h=await sha(typed),saved=ls.get('ph');
+   if(!saved){if(!pend){pend=h;toast('নিশ্চিত করতে আবার একই ৪ সংখ্যা লিখে = চাপুন');resetCalc();return}if(pend!==h){pend=null;toast('মিলেনি, আবার প্রথম থেকে লিখুন');resetCalc();return}pend=null;ls.set('ph',h);toast('গোপন পাসওয়ার্ড সেট হয়েছে। এখন এটি লিখে = চাপলে অ্যাপ খুলবে।');resetCalc();return}
+   if(h===saved){unlocked=true;resetCalc();route();return}}
+  if(op!==null&&prev!==null){cur=calc(prev,cur,op);prev=op=null}fresh=true;typed='';
+ }else{if(op!==null&&prev!==null&&!fresh)cur=calc(prev,cur,op);prev=cur;op=k;fresh=true;typed=''}
+ upd()};
+resetCalc();
+function lock(){unlocked=false;$('#pm').style.display='none';closeChat();resetCalc();route()}
+$$('[data-lock]').forEach(b=>b.onclick=lock);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&me&&unlocked)lock();else if(!document.hidden)beat()});
+function route(){show(!unlocked?'calc':!authReady?'calc':!me?'login':curChat?'chat':'app')}
+
+/* ---------- Auth ---------- */
+onAuthStateChanged(auth,async u=>{authReady=true;me=u;if(u){try{await ensureProfile();startApp()}catch(e){toast('প্রোফাইল তৈরি হয়নি: '+e.message)}}route()});
+$('#gbtn').onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){toast(e.message)}};
+let conf=null,rv=null;
+$('#sendOtp').onclick=async()=>{try{rv=rv||new RecaptchaVerifier(auth,'rc',{size:'invisible'});conf=await signInWithPhoneNumber(auth,$('#ph').value.trim(),rv);$('#l1').style.display='none';$('#l2').style.display='block'}catch(e){toast(e.message);try{rv.clear()}catch(_){}rv=null}};
+$('#verify').onclick=async()=>{try{await conf.confirm($('#otp').value.trim())}catch(e){toast('কোড ভুল: '+e.message)}};
+
+/* ---------- Profile / 8-digit UID ---------- */
+async function ensureProfile(){
+ if((await getDoc(doc(db,'users',me.uid))).exists())return;
+ const cref=doc(db,'meta','counter');
+ await runTransaction(db,async tx=>{const c=await tx.get(cref);const n=c.exists()?c.data().n+1:11111111,code=String(n);
+  tx.set(cref,{n});tx.set(doc(db,'uids',code),{owner:me.uid});
+  tx.set(doc(db,'users',me.uid),{uid8:code,name:me.displayName||('User '+code),privacy:'public',showTyping:true,showActive:true,lastActive:serverTimestamp()})});
+}
+const getProf=uid=>{if(!pc.has(uid))pc.set(uid,getDoc(doc(db,'users',uid)).then(s=>s.data()||{name:'User'}));return pc.get(uid)};
+function startApp(){if(started)return;started=true;
+ onSnapshot(doc(db,'users',me.uid),s=>{prof=s.data();renderMe()});
+ onSnapshot(query(collection(db,'friendships'),where('members','array-contains',me.uid)),s=>{friends=s.docs.map(d=>({id:d.id,...d.data({serverTimestamps:'estimate'})}));renderChats();renderPeople();renderNotifs();composer()});
+ onSnapshot(query(collection(db,'blocks'),where('blocker','==',me.uid)),s=>{blockedByMe=new Set(s.docs.map(d=>d.data().blocked));renderPeople();composer()});
+ onSnapshot(query(collection(db,'blocks'),where('blocked','==',me.uid)),s=>{blockedMe=new Set(s.docs.map(d=>d.data().blocker));composer()});
+ loadUsers();setInterval(beat,60000);beat()}
+const beat=()=>{if(me&&started&&!document.hidden)updateDoc(doc(db,'users',me.uid),{lastActive:serverTimestamp()}).catch(()=>{})};
+const other=f=>f.members.find(x=>x!==me.uid);
+const dname=(p,friend)=>p.privacy==='private'&&!friend?'Private user':p.name;
+const friendOf=uid=>friends.find(f=>f.id===pair(me.uid,uid));
+const isFriend=o=>friendOf(o)?.status==='accepted';
+
+/* ---------- Tabs / nav ---------- */
+const TABS=[['chats','chat'],['people','people'],['notifs','bell'],['menu','menu']];
+function navR(){const n=me?friends.filter(f=>f.status==='pending'&&f.requester!==me.uid).length:0;
+ $('#nav').innerHTML=TABS.map(([k,i])=>`<button data-t="${k}" class="${curTab===k?'on':''}">${ic(i,26)}${k==='notifs'&&n?`<b class="badge">${n}</b>`:''}<span>${T(k)}</span></button>`).join('')}
+function setTab(t){curTab=t;$$('.pane').forEach(p=>p.classList.toggle('on',p.id==='p-'+t));navR();if(t==='people')loadUsers()}
+$('#nav').onclick=e=>{const b=e.target.closest('button');if(b)setTab(b.dataset.t)};
+
+function applyLang(){const d=document.documentElement;d.lang=lang;d.dir=(lang==='ar'||lang==='ur')?'rtl':'ltr';
+ $$('[data-i]').forEach(e=>e.textContent=T(e.dataset.i));$('#sq').placeholder=T('search');$('#sbtn').innerHTML=ic('people',18);
+ navR();if(me&&started){renderMe();renderPeople();renderChats();renderNotifs()}}
+
+/* ---------- Chats list ---------- */
+async function renderChats(){const t=++rt;
+ const list=friends.filter(f=>f.status==='accepted'||(f.status==='pending'&&f.lastText&&f.requester===me.uid)).sort((a,b)=>(b.lastTs?.toMillis?.()||0)-(a.lastTs?.toMillis?.()||0));
+ const rows=await Promise.all(list.map(async f=>{const o=other(f),p=await getProf(o);const lt=f.lastTs?.toMillis?.();
+  return `<div class="row" data-o="${o}">${av(p.name,54,false,p.photo)}<div class="g"><b>${esc(p.name)}</b><small>${f.lastText?(f.lastFrom===me.uid?'You: ':'')+esc(f.lastText)+(lt?' · '+hm(lt):''):'নতুন বন্ধু — মেসেজ করুন'}</small></div></div>`}));
+ if(t!==rt)return;$('#chatlist').innerHTML=rows.join('')||`<div class="empty">${T('none')}</div>`;
+ $$('#chatlist .row').forEach(r=>r.onclick=()=>openChat(r.dataset.o))}
+
+/* ---------- Notifications ---------- */
+async function renderNotifs(){const t=++rn;navR();
+ const inc=friends.filter(f=>f.status==='pending'&&f.requester!==me.uid);
+ const mk=async f=>{const p=await getProf(f.requester);return `<div class="row" ${f.lastText?`data-o="${f.requester}"`:''}>${av(p.name,50,false,p.photo)}<div class="g"><b>${esc(p.name)}</b><small>${f.lastText?esc(f.lastText):'UID '+esc(p.uid8||'')}</small></div><button class="btn" data-acc="${f.id}">${T('accept')}</button><button class="btn g2" data-del="${f.id}">${ic('x',16)}</button></div>`};
+ const fr=await Promise.all(inc.filter(f=>!f.lastText).map(mk)),mr=await Promise.all(inc.filter(f=>f.lastText).map(mk));
+ if(t!==rn)return;
+ $('#notifs').innerHTML=(fr.length?`<h3>${T('fr')}</h3>`+fr.join(''):'')+(mr.length?`<h3>${T('mr')}</h3>`+mr.join(''):'')||`<div class="empty">${T('none')}</div>`}
+$('#notifs').onclick=async e=>{const b=e.target.closest('[data-acc],[data-del]'),r=e.target.closest('[data-o]');
+ try{if(b?.dataset.acc)await updateDoc(doc(db,'friendships',b.dataset.acc),{status:'accepted'});else if(b?.dataset.del)await deleteDoc(doc(db,'friendships',b.dataset.del));else if(r)openChat(r.dataset.o)}catch(x){toast(x.message)}};
+
+/* ---------- People ---------- */
+function loadUsers(){if(!me)return;getDocs(query(collection(db,'users'),limit(50))).then(s=>{allUsers=s.docs.map(d=>({id:d.id,...d.data()}));renderPeople()}).catch(()=>{})}
+$('#sf').onsubmit=async e=>{e.preventDefault();const q=$('#sq').value.trim();const isU=/^\d{8}$/.test(q);if(!isU&&!/^[a-z0-9_.]{3,20}$/i.test(q)){toast('৮ সংখ্যার UID বা ইউজারনেম দিন');return}
+ const s=await getDocs(query(collection(db,'users'),where(isU?'uid8':'username','==',isU?q:q.toLowerCase())));const d=s.docs[0];
+ if(!d){$('#sres').innerHTML='<div class="empty" style="padding:30px">কাউকে পাওয়া যায়নি</div>';return}
+ if(d.id===me.uid){$('#sres').innerHTML='<div class="empty" style="padding:30px">এটা আপনার নিজের UID</div>';return}
+ searched={id:d.id,...d.data()};if(!allUsers.find(u=>u.id===searched.id))allUsers.push(searched);renderPeople()};
+const urow=u=>`<div class="row" data-p="${u.id}">${av(dname(u,false),50,false,u.privacy==='private'?'':u.photo)}<div class="g"><b>${esc(dname(u,false))}</b><small>UID ${esc(u.uid8)}${u.username?' · @'+esc(u.username):''}</small></div></div>`;
+async function renderPeople(){if(!me)return;let h='';
+ if(searched&&searched.id!==me.uid)h+=urow(searched);
+ const cand=allUsers.filter(u=>u.id!==me.uid&&u.id!==searched?.id&&!isFriend(u.id)&&!blockedByMe.has(u.id)&&!blockedMe.has(u.id));
+ if(cand.length)h+=`<h3>${T('know')}</h3>`+cand.map(urow).join('');
+ if(blockedByMe.size){h+='<h3>Blocked</h3>';for(const u of blockedByMe){const p=await getProf(u);h+=`<div class="row">${av(p.name)}<div class="g"><b>${esc(p.name)}</b></div><button class="btn g2" data-blk="${u}">Unblock</button></div>`}}
+ $('#sres').innerHTML='';$('#people').innerHTML=h||`<div class="empty">${T('none')}</div>`}
+$('#people').onclick=async e=>{const b=e.target.closest('[data-blk]'),r=e.target.closest('[data-p]');try{if(b)await toggleBlock(b.dataset.blk);else if(r)openProfile(r.dataset.p)}catch(x){toast(x.message)}};
+/* Friend request: always pending until the other person accepts (no auto-friend) */
+async function connect(u){if(!friendOf(u))await setDoc(doc(db,'friendships',pair(me.uid,u)),{members:[me.uid,u].sort(),requester:me.uid,status:'pending',created:serverTimestamp()})}
+async function toggleBlock(u){if(blockedByMe.has(u))await deleteDoc(doc(db,'blocks',me.uid+'_'+u));else await setDoc(doc(db,'blocks',me.uid+'_'+u),{blocker:me.uid,blocked:u})}
+
+/* ---------- Profile view (no friend request needed) ---------- */
+function openProfile(id){pu=allUsers.find(u=>u.id===id);if(!pu)return;renderProfile();$('#pm').style.display='block'}
+function renderProfile(){const u=pu,f=friendOf(u.id),fr=f?.status==='accepted',priv=u.privacy==='private'&&!fr,b=blockedByMe.has(u.id);
+ const btn=f?(fr?'<span style="color:var(--sub)">✓</span>':f.requester===me.uid?'<button class="btn g2" data-a="cancel">'+ic('x',14)+'</button>':`<button class="btn" data-a="acc">${T('accept')}</button>`):`<button class="btn" data-a="add">${T('add')}</button>`;
+ $('#pm').innerHTML=`<div class="top"><button class="ib" data-a="close">${ic('back')}</button><h1 style="font-size:20px">${T('profile')}</h1></div>
+ <div style="text-align:center;padding:10px 20px"><div style="display:flex;justify-content:center">${av(dname(u,fr),104,false,priv?'':u.photo)}</div>
+ <h2 style="margin:12px 0 2px">${esc(dname(u,fr))}</h2><div style="color:var(--sub)">${u.username&&!priv?'@'+esc(u.username):priv?T('priv'):T('nouname')}</div>
+ ${!priv&&u.bio?`<p style="margin:12px 0">${esc(u.bio)}</p>`:''}<div style="color:var(--sub);margin:8px 0 16px">UID ${esc(u.uid8)}</div>
+ <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">${btn}<button class="btn g2" data-a="msg">${T('msg')}</button><button class="btn g2" data-a="blk">${b?'Unblock':'Block'}</button></div></div>`}
+$('#pm').onclick=async e=>{const a=e.target.closest('[data-a]')?.dataset.a;if(!a||!pu)return;
+ try{if(a==='close')$('#pm').style.display='none';
+ else if(a==='add'){await connect(pu.id);toast('✓')}
+ else if(a==='acc')await updateDoc(doc(db,'friendships',pair(me.uid,pu.id)),{status:'accepted'});
+ else if(a==='cancel')await deleteDoc(doc(db,'friendships',pair(me.uid,pu.id)));
+ else if(a==='blk')await toggleBlock(pu.id);
+ else if(a==='msg'){$('#pm').style.display='none';openChat(pu.id);return}
+ setTimeout(renderProfile,300)}catch(x){toast(x.message)}};
+
+/* ---------- Menu / settings ---------- */
+const R=(id,i,label,right='',extra='')=>`<div class="row" id="${id}" ${extra}><span class="ri">${ic(i,20)}</span><div class="g"><b>${label}</b></div>${right}</div>`;
+const SW=(id,on)=>`<label class="sw"><input type="checkbox" id="${id}" ${on?'checked':''}><span></span></label>`;
+function renderMe(){if(!prof)return;const th=ls.get('theme')||'system';
+ $('#me').innerHTML=`<div style="text-align:center;padding:10px"><div style="display:flex;justify-content:center"><label style="cursor:pointer">${av(prof.name,96,false,prof.photo)}<input type="file" id="pf" accept="image/*" hidden></label></div><h2 style="margin:10px 0 2px">${esc(prof.name)}</h2><div style="color:var(--sub)">${prof.username?'@'+esc(prof.username):T('nouname')}</div><div style="margin:4px 20px 8px">${esc(prof.bio||'')}</div><button class="btn g2" id="cp">UID: ${esc(prof.uid8)}</button></div>
+ ${R('ru','at',T('username'))}${R('rb','note',T('bio'))}${R('rn','pen',T('name'))}
+ ${R('rt','moon',T('theme'),`<select id="th"><option value="system">${T('sys')}</option><option value="light">${T('light')}</option><option value="dark">${T('dark')}</option></select>`)}
+ ${R('rl','globe',T('language'),`<select id="lg">${Object.keys(LN).map(k=>`<option value="${k}">${LN[k]}</option>`).join('')}</select>`)}
+ ${R('rv','shield',T('profile'),`<select id="pv"><option value="public">${T('pub')}</option><option value="private">${T('priv')}</option></select>`)}
+ ${R('rty','kb',T('typing'),SW('st',prof.showTyping))}${R('rac','pulse',T('active'),SW('sa',prof.showActive))}
+ ${R('rp','hash',T('pin'))}${R('lo','out',T('logout'),'','style="color:#e41e3f"')}`;
+ $('#th').value=th;$('#lg').value=lang;$('#pv').value=prof.privacy;
+ $('#cp').onclick=()=>{navigator.clipboard?.writeText(prof.uid8);toast('UID ✓')};
+ $('#pf').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d'),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);updateDoc(doc(db,'users',me.uid),{photo:c.toDataURL('image/jpeg',.7)}).catch(x=>toast(x.message))};im.src=URL.createObjectURL(f)};
+ $('#rb').onclick=()=>{const b=prompt(T('bio')+' (100)',prof.bio||'');if(b!==null)updateDoc(doc(db,'users',me.uid),{bio:b.trim().slice(0,100)})};
+ $('#ru').onclick=async()=>{const u=(prompt(T('username')+' (a-z, 0-9, _ . — 3-20)',prof.username||'')||'').trim().toLowerCase();if(!u||u===prof.username)return;if(!/^[a-z0-9_.]{3,20}$/.test(u)){toast('ইউজারনেম ঠিক নয়');return}
+  try{await runTransaction(db,async tx=>{const c=doc(db,'usernames',u);if((await tx.get(c)).exists())throw new Error('এই ইউজারনেম আগেই নেওয়া হয়েছে');tx.set(c,{owner:me.uid});if(prof.username)tx.delete(doc(db,'usernames',prof.username));tx.update(doc(db,'users',me.uid),{username:u})});toast('✓')}catch(x){toast(x.message)}};
+ $('#rn').onclick=()=>{const n=(prompt(T('name'),prof.name)||'').trim();if(n)updateDoc(doc(db,'users',me.uid),{name:n.slice(0,40)})};
+ $('#th').onchange=e=>{ls.set('theme',e.target.value);applyTheme()};
+ $('#lg').onchange=e=>{lang=e.target.value;ls.set('lang',lang);applyLang()};
+ $('#pv').onchange=e=>updateDoc(doc(db,'users',me.uid),{privacy:e.target.value});
+ $('#st').onchange=e=>updateDoc(doc(db,'users',me.uid),{showTyping:e.target.checked});
+ $('#sa').onchange=e=>updateDoc(doc(db,'users',me.uid),{showActive:e.target.checked});
+ $('#rp').onclick=async()=>{const p=prompt(T('pin')+' (4)');if(/^\d{4}$/.test(p||'')){ls.set('ph',await sha(p));toast('✓')}else if(p)toast('ঠিক ৪টি সংখ্যা দিন')};
+ $('#lo').onclick=async()=>{await signOut(auth);location.reload()}}
+
+/* ---------- Chat ---------- */
+function openChat(o){closeChat();const pid=pair(me.uid,o);curChat={pid,o,msgs:[],typing:0,op:{},lastT:0,q:0};show('chat');$('#cmsgs').innerHTML='';
+ un.push(onSnapshot(doc(db,'quota',me.uid+'_'+o),s=>{curChat.q=s.exists()?s.data().n:0;composer()}));
+ un.push(onSnapshot(doc(db,'users',o),s=>{curChat.op=s.data()||{};head()}));
+ un.push(onSnapshot(doc(db,'chats',pid),s=>{curChat.typing=s.data()?.typing?.[o]||0;head();renderMsgs();setTimeout(()=>{head();renderMsgs()},5200)}));
+ un.push(onSnapshot(query(collection(db,'chats',pid,'messages'),orderBy('ts'),limit(300)),s=>{curChat.msgs=s.docs.map(d=>({id:d.id,...d.data({serverTimestamps:'estimate'})}));renderMsgs();markSeen()}));
+ composer()}
+function closeChat(){un.forEach(f=>f());un=[];curChat=null;if(unlocked&&me)show('app')}
+$('#cback').onclick=closeChat;
+function head(){if(!curChat)return;const p=curChat.op,nm=dname(p,isFriend(curChat.o))||'';const typing=Date.now()-curChat.typing<5000&&p.showTyping!==false;
+ const la=p.lastActive?.toMillis?.(),on=p.showActive!==false&&la&&Date.now()-la<120000;
+ const st=typing?'টাইপ করছে…':p.showActive===false?'':on?'এখন অ্যাক্টিভ':la?'অ্যাক্টিভ ছিল '+ago(la):'';
+ $('#chead').innerHTML=av(nm,40,on,isFriend(curChat.o)||p.privacy!=='private'?p.photo:'')+`<div style="min-width:0"><b>${esc(nm)}</b><small style="display:block;color:var(--sub)">${st}</small></div>`}
+function renderMsgs(){if(!curChat)return;const box=$('#cmsgs'),atEnd=box.scrollHeight-box.scrollTop-box.clientHeight<120;let h='',pt=0;
+ const lastMine=[...curChat.msgs].reverse().find(m=>m.from===me.uid&&!m.deleted)?.id;
+ curChat.msgs.forEach(m=>{const t=m.ts?.toMillis?.()||Date.now();if(t-pt>600000)h+=`<div class="ts">${hm(t)}</div>`;pt=t;const mine=m.from===me.uid;
+  h+=`<div class="m ${mine?'me':''} ${m.deleted?'del':''}" data-id="${m.id}" data-mine="${mine}">${m.deleted?'মেসেজটি আনসেন্ড করা হয়েছে':esc(m.text)}</div>`;
+  if(m.id===lastMine)h+=`<div class="st">${m.seen?'দেখেছে':'পাঠানো হয়েছে · '+ago(t)}</div>`});
+ if(Date.now()-curChat.typing<5000&&curChat.op.showTyping!==false)h+='<div class="m">• • •</div>';
+ box.innerHTML=h;if(atEnd)box.scrollTop=box.scrollHeight;
+ $$('#cmsgs .m[data-mine=true]:not(.del)').forEach(el=>el.onclick=()=>{if(confirm('এই মেসেজ আনসেন্ড করবেন?'))updateDoc(doc(db,'chats',curChat.pid,'messages',el.dataset.id),{deleted:true,text:''})})}
+function markSeen(){if(!curChat||document.hidden)return;const un2=curChat.msgs.filter(m=>m.from!==me.uid&&!m.seen);if(!un2.length)return;const b=writeBatch(db);un2.forEach(m=>b.update(doc(db,'chats',curChat.pid,'messages',m.id),{seen:true}));b.commit().catch(()=>{})}
+function composer(){if(!curChat)return;const o=curChat.o,f=friendOf(o);let msg='';
+ if(blockedByMe.has(o))msg='আপনি ব্লক করেছেন';else if(blockedMe.has(o))msg='মেসেজ পাঠানো যাচ্ছে না';
+ else if(f&&f.status==='pending'){if(f.requester!==me.uid)msg='Accept করলে উত্তর দিতে পারবেন';else if((curChat.q||0)>=3)msg='গ্রহণ না করা পর্যন্ত আর মেসেজ দেওয়া যাবে না'}
+ const i=$('#ct');i.disabled=!!msg;i.placeholder=msg||'Aa';banner(f)}
+function banner(f){const b=$('#rq');let h='';
+ if(f&&f.status==='pending'){h=f.requester===me.uid?`মেসেজ রিকোয়েস্ট পাঠানো হয়েছে। গ্রহণ না করা পর্যন্ত আর ${Math.max(0,3-(curChat.q||0))}টি টেক্সট মেসেজ দিতে পারবেন।`:`মেসেজ রিকোয়েস্ট — Accept না করা পর্যন্ত উত্তর দেওয়া যাবে না।<br><br><button class="btn" data-a="acc">${T('accept')}</button> <button class="btn g2" data-a="del">${T('del')}</button> <button class="btn g2" data-a="blk">Block</button>`}
+ else if(!f)h='মেসেজ দিলে এটি একটি মেসেজ রিকোয়েস্ট হিসেবে যাবে। সে Accept করলে তবেই আপনারা বন্ধু হবেন।';
+ b.style.display=h?'block':'none';b.innerHTML=h}
+$('#rq').onclick=async e=>{const a=e.target.dataset.a;if(!a||!curChat)return;const f=friendOf(curChat.o);try{if(a==='acc')await updateDoc(doc(db,'friendships',f.id),{status:'accepted'});else if(a==='del'){await deleteDoc(doc(db,'friendships',f.id));closeChat()}else{await toggleBlock(curChat.o);closeChat()}}catch(x){toast(x.message)}};
+$('#ct').oninput=()=>{if(!curChat||!prof?.showTyping)return;if(Date.now()-curChat.lastT>2000){curChat.lastT=Date.now();setDoc(doc(db,'chats',curChat.pid),{typing:{[me.uid]:Date.now()}},{merge:true}).catch(()=>{})}};
+$('#cf').onsubmit=async e=>{e.preventDefault();const t=$('#ct').value.trim();if(!t||!curChat||$('#ct').disabled)return;
+ try{let f=friendOf(curChat.o);if(!f){await connect(curChat.o);f={id:pair(me.uid,curChat.o),status:'pending',requester:me.uid}}
+  $('#ct').value='';
+  const b=writeBatch(db),up={lastText:t.slice(0,60),lastFrom:me.uid,lastTs:serverTimestamp()};if(f.status==='pending')b.set(doc(db,'quota',me.uid+'_'+curChat.o),{n:(curChat.q||0)+1});
+  b.set(doc(collection(db,'chats',curChat.pid,'messages')),{from:me.uid,text:t.slice(0,2000),ts:serverTimestamp(),seen:false,deleted:false});
+  b.update(doc(db,'friendships',f.id),up);await b.commit()}catch(x){toast('পাঠানো যায়নি: '+x.message)}};
+$('#cmenu').onclick=()=>{if(!curChat)return;const o=curChat.o,b=blockedByMe.has(o);if(confirm(b?'আনব্লক করবেন?':'এই ইউজারকে ব্লক করবেন?'))toggleBlock(o)};
+
+/* ---------- Init icons + language ---------- */
+$$('[data-lock]').forEach(b=>b.innerHTML=ic('lock'));
+$('#cback').innerHTML=ic('back');$('#cmenu').innerHTML=ic('more');$('#sendb').innerHTML=ic('send',26);
+$('.logo').innerHTML=ic('chat',40);
+applyLang();
+</script></body></html>
